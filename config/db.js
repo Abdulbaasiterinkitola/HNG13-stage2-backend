@@ -1,21 +1,20 @@
 import { Sequelize } from 'sequelize';
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
 
-// dotenv.config();
+// I re-enabled dotenv for local development
+dotenv.config();
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: 'mysql',
-    logging: false,
-    dialectOptions: {
-        ssl: {
-            rejectUnauthorized: false
-        }
+// This new setup uses the single DATABASE_URL from Aiven/Railway
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'mysql',
+  logging: false,
+  dialectOptions: {
+    // Aiven requires a secure SSL connection
+    ssl: {
+      require: true,
+      rejectUnauthorized: true
     }
   }
-);
+});
 
 export default sequelize;

@@ -12,7 +12,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     // Aiven requires a secure SSL connection
     ssl: {
       require: true,
-      rejectUnauthorized: true
+      rejectUnauthorized: false
     }
   }
 });
